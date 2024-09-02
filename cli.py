@@ -1,6 +1,7 @@
 import argparse
 import config
-from integrations.github import GuthubIntegration
+from integrations.github.github import GuthubIntegration
+from utils.format_user_activity import formatUserActivity
 
 def main():
     parser = argparse.ArgumentParser(description="Consult your github profile")
@@ -14,7 +15,12 @@ def main():
         if args.operation == 'github-activity':
             # Validar primero que si se envie la informacion que es via cli
             githubInstance = GuthubIntegration(config.GITHUB_BASE_URL)
-            print(githubInstance.getUserInformation("soyeison"))
+            userActivity = githubInstance.getUserInformation("kamranahmedse")
+            userActivityFormated = formatUserActivity(userActivity)
+            
+            # Mostrar por consola
+            for userActivity in userActivityFormated:
+                print(userActivity)
     except:
         print("Melo")
 
