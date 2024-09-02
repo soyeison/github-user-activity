@@ -1,0 +1,2 @@
+def formatUserActivity(activity):
+    pass

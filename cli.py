@@ -1,4 +1,5 @@
 import argparse
+import config
 from integrations.github import GuthubIntegration
 
 def main():
@@ -12,8 +13,8 @@ def main():
     try:
         if args.operation == 'github-activity':
             # Validar primero que si se envie la informacion que es via cli
-            githubInstance = GuthubIntegration('baseurl')
-            print(githubInstance.getUserInformation())
+            githubInstance = GuthubIntegration(config.GITHUB_BASE_URL)
+            print(githubInstance.getUserInformation("soyeison"))
     except:
         print("Melo")
 
