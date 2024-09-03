@@ -1,6 +1,7 @@
 import http.client
 import urllib.parse
 import json
+from errors.invalid_username_exception import InvalidUsernameException
 
 class GuthubIntegration:
     def __init__(self, baseUrl):
@@ -23,12 +24,18 @@ class GuthubIntegration:
             if response.status == 200:
                 data = response.read()
                 json_data = json.loads(data.decode())
-                return json_data
+                if len(json_data) > 0:
+                    return json_data
+                else:
+                    raise InvalidUsernameException()
             else:
                 print(f"Error: {response.status} {response.reason}")
+                
+        except InvalidUsernameException as e:
+            raise e
         except http.client.HTTPException as e:
-            print("HTTP Exception:", e)
+            raise e
         except Exception as e:
-            print(f"Something happened: {e}")
+            raise e
         finally:
             conn.close()
